@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title> 弹层页 </title>
+	<script type="text/javascript" src="QH.js"></script>
+	<link rel="stylesheet" href="assets/css/base-dev.css" />
+	<link rel="stylesheet" href="assets/css/mask_css.css" />
+	<style type="text/css">
+		input {width:100px; height:30px;}
+	</style>
+</head>
+<body>
+	<select name="" id="">
+		<option value="">adfs</option>
+		<option value="">adfs</option>
+		<option value="">adfs</option>
+		<option value="">adfs</option>
+		<option value="">adfs</option>
+	</select>
+	<input type="button" id="btn1" value="click posLay"/>
+	<input type="button" id="btn2" value="click confirm"/>
+	<input type="button" id="btn3" value="click dialog"/>
+	<!-- -->
+	<div class="layout" style="display:none">
+		<div class="layout_hd">
+			<a href="#" class="layout_close">关闭</a>
+			<h2>标题</h2>
+		</div>
+		<div class="layout_bd">
+			<p>我是内容！</p>
+		</div>
+		<div class="layout_btns dib-wrap">
+			<a href="#" class="dib yes_btn"><span>确定</span></a>
+			<a href="#" class="dib layout_btn"><span>取消</span></a>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		//var oUl = QH.DOM.getById('mask');
+		
+		var oBtn1 = QH.DOM.getById('btn1'),
+			oBtn2 = QH.DOM.getById('btn2'),
+			oBtn3 = QH.DOM.getById('btn3');
+			
+		<!-- 自定义弹层的运用示例 -->
+		oBtn1.onclick = function(e) {
+			
+			QH.tools.posLay(QH.DOM.getByClass('layout')[0], true, function(){
+				var yesBtn = QH.DOM.getByClass('yes_btn', this)[0],
+					noBtn = QH.DOM.getByClass('layout_btn', this)[0],
+					closeBtn = QH.DOM.getByClass('layout_close', this)[0],
+					_this = this;
+				if (yesBtn) {
+					yesBtn.onclick = noBtn.onclick = closeBtn.onclick = function(){
+						QH.tools.close(_this);
+						return false;
+					}
+				}
+			});
+			
+		}
+		
+		<!-- 固定弹层的运用示例 -->
+		oBtn2.onclick = function() {
+			QH.tools.confirm({
+				tit:'confirmTitle',
+				//noClose:true,
+				content:'<b>test content!</b>',
+				yesBtn:true,
+				//btnPos:'layout_mid' || 'layout_lt',
+				posBtn: 'layout'
+				//yesTxt: 'sureBtn',
+				//noTxt:'知道了',
+			},function(e){
+				QH.tools.dialog({
+					hasTit:true,
+					//noClose:true,
+					tit: 'dialog',
+					content: '<li><b>dialog content!!!</b></li>'
+				})
+			});
+		}
+		
+		<!-- 提示性弹层的运用示例 -->
+		oBtn3.onclick = function() {
+			QH.tools.dialog({
+				hasTit:true,
+				noClose:true,
+				tit: 'dialog',
+				content: '<li><b>dialog content!!!</b></li>'
+			})
+		}
+		
+		// 响应某个事件的函数叫做事件处理程序
+	</script>
+</body>
+</html>
